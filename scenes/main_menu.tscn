@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://bp1h6blk4xqvd"]
+
+[ext_resource type="Script" uid="uid://l67i2tf1e6ox" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_vue75"]
+specular_color = Color(0.5372549, 0.50980395, 0.19607843, 1)
+
+[node name="MainMenu" type="Control" unique_id=1652696058]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=1068280625]
+
+[node name="TextureRect" type="TextureRect" parent="Parallax2D" unique_id=731762347]
+modulate = Color(1.4439226e-07, 0.23465082, 0.3460244, 1)
+offset_right = 383.0
+offset_bottom = 215.0
+texture = SubResource("CanvasTexture_vue75")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1283386820]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -23.5
+offset_right = 27.0
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=1248760650]
+layout_mode = 2
+text = "Nightmare Protocol"
+
+[node name="Play" type="Button" parent="VBoxContainer" unique_id=1400133893]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Start"
+
+[node name="Exit" type="Button" parent="VBoxContainer" unique_id=1277351685]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Exit"
+
+[connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]

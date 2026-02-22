@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c0awy1wjbsw60"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8cj0n"]
+
+[node name="Game" type="Node2D" unique_id=755915402]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1469479735]
+modulate = Color(0.05882353, 0, 0.16862746, 1)
+offset_right = 384.0
+offset_bottom = 216.0
+texture = SubResource("CanvasTexture_8cj0n")

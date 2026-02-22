@@ -13,7 +13,10 @@ config_version=5
 config/name="Nightmare Protocol"
 run/main_scene="uid://bp1h6blk4xqvd"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+
+[autoload]
+
+scene_manager="*uid://bav5qadn7jau"
 
 [display]
 

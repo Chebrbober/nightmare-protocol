@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://bav5qadn7jau"]
+
+[ext_resource type="Script" uid="uid://devbyi245a1i0" path="res://scripts/scene_manager.gd" id="1_we8k5"]
+[ext_resource type="Shader" uid="uid://budrda6nsixni" path="res://scripts/fade.gdshader" id="2_65mdo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b81s6"]
+shader = ExtResource("2_65mdo")
+shader_parameter/progress = 0.0
+shader_parameter/reverse = true
+shader_parameter/numberOfTiles = Vector2(15, 8.4375)
+shader_parameter/pixelsPrTile = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_we8k5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionColor:material:shader")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_65mdo")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TransitionColor:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TransitionColor:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_65mdo"]
+resource_name = "transition"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionColor:material:shader")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_65mdo")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TransitionColor:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TransitionColor:modulate")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b81s6"]
+_data = {
+&"RESET": SubResource("Animation_we8k5"),
+&"transition": SubResource("Animation_65mdo")
+}
+
+[node name="SceneManager" type="CanvasLayer" unique_id=616340019]
+process_mode = 3
+layer = 4
+script = ExtResource("1_we8k5")
+
+[node name="TransitionColor" type="ColorRect" parent="." unique_id=650511378]
+modulate = Color(1, 1, 1, 0)
+top_level = true
+material = SubResource("ShaderMaterial_b81s6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TransitionAnimation" type="AnimationPlayer" parent="." unique_id=1494729328]
+libraries/ = SubResource("AnimationLibrary_b81s6")

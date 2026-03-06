@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d4cjai5bvlcya"]
+
+[ext_resource type="Script" uid="uid://dmwuurve8dpma" path="res://scripts/spawn_button.gd" id="1_ghwsi"]
+
+[node name="SpawnButton" type="Button" unique_id=947812912]
+custom_minimum_size = Vector2(30, 30)
+offset_right = 30.0
+offset_bottom = 31.0
+toggle_mode = true
+text = "
+"
+script = ExtResource("1_ghwsi")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

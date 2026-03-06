@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c0awy1wjbsw60"]
 
 [ext_resource type="Script" uid="uid://kqcvrhntbqac" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://dmwuurve8dpma" path="res://scripts/spawn_button.gd" id="2_yqjtg"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8cj0n"]
 
@@ -59,13 +60,10 @@ theme_override_constants/margin_bottom = 3
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="Button" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=591315031]
-custom_minimum_size = Vector2(50, 0)
+[node name="SpawnButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=770043042]
 layout_mode = 2
-size_flags_vertical = 0
-toggle_mode = true
-text = "platform"
-autowrap_mode = 3
+script = ExtResource("2_yqjtg")
+metadata/_custom_type_script = "uid://dmwuurve8dpma"
 
 [node name="Area2D" type="Area2D" parent="." unique_id=879890457]
 

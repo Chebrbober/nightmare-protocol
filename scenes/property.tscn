@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bkjaowtp8h2y8"]
+
+[node name="Property" type="Node2D" unique_id=1635707719]
+
+[node name="GraphNode" type="GraphNode" parent="." unique_id=1984431856]
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 63.0
+offset_bottom = 54.0
+resizable = true
+title = "Property"

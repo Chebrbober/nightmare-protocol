@@ -69,9 +69,11 @@ theme_override_constants/separation = 5
 
 [node name="AttributeButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=61823767]
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
 toggle_mode = true
 button_group = ExtResource("2_lnu2h")
 icon_alignment = 1
+vertical_icon_alignment = 0
 expand_icon = true
 script = ExtResource("2_yqjtg")
 metadata/_custom_type_script = "uid://dmwuurve8dpma"

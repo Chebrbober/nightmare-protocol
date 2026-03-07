@@ -17,6 +17,7 @@ func _ready() -> void:
 					var attribute_button_instance = attribute_button.duplicate()
 					attribute_button_instance.object_data = object_data
 					attribute_button_instance.text = object_data.name
+					attribute_button_instance.icon = object_data.texture
 					attribute_button_instance.visible = true
 					$MarginContainer/PanelContainer/MarginContainer/VBoxContainer.add_child(attribute_button_instance)
 					attribute_button_instance.connect("attribute_toggled", Callable(self, "_on_attribute_button_toggled"))

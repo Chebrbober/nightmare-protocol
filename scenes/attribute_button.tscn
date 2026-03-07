@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://d4cjai5bvlcya"]
+
+[ext_resource type="ButtonGroup" uid="uid://beto6fx5kvc4n" path="res://resources/spawn_button_group.tres" id="1_gqp6v"]
+[ext_resource type="Script" uid="uid://dmwuurve8dpma" path="res://scripts/attribute_button.gd" id="2_uljnt"]
+
+[node name="AttributeButton" type="Button" unique_id=947812912]
+custom_minimum_size = Vector2(30, 30)
+offset_right = 30.0
+offset_bottom = 31.0
+toggle_mode = true
+button_group = ExtResource("1_gqp6v")
+text = "
+"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_uljnt")
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

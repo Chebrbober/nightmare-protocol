@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cg2oi8d5nkjjq" path="res://scripts/object_data.gd" id="1_byysi"]
 [ext_resource type="Texture2D" uid="uid://lflkglw7cxu3" path="res://assets/platform.png" id="2_af1sl"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mfv3d"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pigig"]
 size = Vector2(25, 7)
 
 [resource]
@@ -12,5 +12,5 @@ name = "Platform"
 description = "Static body on which you can stand"
 type = "Structure"
 texture = ExtResource("2_af1sl")
-shape = SubResource("RectangleShape2D_mfv3d")
+shape = SubResource("RectangleShape2D_pigig")
 metadata/_custom_type_script = "uid://cg2oi8d5nkjjq"

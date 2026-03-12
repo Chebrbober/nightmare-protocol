@@ -6,7 +6,8 @@ class_name AttributeButton
 signal attribute_toggled(object_data: ObjectData)
 
 func _ready() -> void:
-	pass # Replace with function body.
+	if not is_connected("toggled", Callable(self, "_on_toggled")):
+		connect("toggled", Callable(self, "_on_toggled"))
 
 
 func _process(delta: float) -> void:

@@ -1,9 +1,9 @@
 extends Button
 class_name AttributeButton
 
-@export var object_data: ObjectData
+@export var attribute_data: AttributeData
 
-signal attribute_toggled(object_data: ObjectData)
+signal attribute_toggled(attribute_data: AttributeData, is_pressed: bool)
 
 func _ready() -> void:
 	if not is_connected("toggled", Callable(self, "_on_toggled")):
@@ -15,4 +15,4 @@ func _process(delta: float) -> void:
 
 
 func _on_toggled(toggled_on: bool) -> void:
-	emit_signal("attribute_toggled", object_data)
+	emit_signal("attribute_toggled", attribute_data, button_pressed)

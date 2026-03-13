@@ -8,9 +8,9 @@ size = Vector2(25, 7)
 
 [resource]
 script = ExtResource("1_byysi")
-name = "Platform"
-description = "Static body on which you can stand"
 type = "Structure"
 texture = ExtResource("2_af1sl")
 shape = SubResource("RectangleShape2D_pigig")
+name = "Platform"
+description = "Static body on which you can stand"
 metadata/_custom_type_script = "uid://cg2oi8d5nkjjq"

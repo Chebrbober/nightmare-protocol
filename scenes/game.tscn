@@ -7,7 +7,7 @@
 [sub_resource type="CanvasTexture" id="CanvasTexture_8cj0n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
-size = Vector2(383, 217)
+size = Vector2(640, 360)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 distance = -176.0
@@ -17,6 +17,7 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -36,7 +37,7 @@ texture = SubResource("CanvasTexture_8cj0n")
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnArea" unique_id=865046939]
-position = Vector2(191.5, 108.5)
+position = Vector2(321, 180)
 shape = SubResource("RectangleShape2D_lnu2h")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=374527495]
@@ -90,6 +91,7 @@ script = ExtResource("2_yqjtg")
 metadata/_custom_type_script = "uid://dmwuurve8dpma"
 
 [node name="Area2D" type="Area2D" parent="." unique_id=879890457]
+position = Vector2(315, 112)
 collision_mask = 0
 input_pickable = false
 

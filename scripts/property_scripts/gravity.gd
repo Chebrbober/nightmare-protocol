@@ -1,11 +1,24 @@
 extends Node
 
+@export var gravity_value: float = 1.0
+@export var mass: float = 1.0
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	var body = get_parent()
+	while body and not body is RigidBody2D:
+		body = body.get_parent()
+	
+	if body and body is RigidBody2D:
+		body.gravity_scale = gravity_value
+		body.mass = mass
+	else:
+		push_error("Gravity property requires RigidBody2D in hierarchy")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _physics_process(_delta: float) -> void:
+	var body = get_parent()
+	while body and not body is RigidBody2D:
+		body = body.get_parent()
+	
+	if body is RigidBody2D:
+		body.gravity_scale = gravity_value
+		body.mass = mass

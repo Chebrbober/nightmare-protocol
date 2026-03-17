@@ -93,6 +93,5 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			var property_scene = load("res://scenes/property.tscn") as PackedScene
 			var property_instance = property_scene.instantiate()
 			property_instance.position = event.position
-			var name_label = property_instance.get_node("PanelContainer/MarginContainer/VBoxContainer/Label") as Label
-			name_label.text = property_data.name
 			add_child(property_instance)
+			property_instance.setup(property_data)

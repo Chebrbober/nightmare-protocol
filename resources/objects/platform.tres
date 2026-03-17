@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ObjectData" format=3 uid="uid://cwsa28hbwitqf"]
+
+[ext_resource type="Script" uid="uid://cg2oi8d5nkjjq" path="res://scripts/object_data.gd" id="1_byysi"]
+[ext_resource type="Texture2D" uid="uid://lflkglw7cxu3" path="res://assets/platform.png" id="2_af1sl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pigig"]
+size = Vector2(25, 7)
+
+[resource]
+script = ExtResource("1_byysi")
+type = "Structure"
+texture = ExtResource("2_af1sl")
+shape = SubResource("RectangleShape2D_pigig")
+name = "Platform"
+description = "Static body on which you can stand"
+metadata/_custom_type_script = "uid://cg2oi8d5nkjjq"

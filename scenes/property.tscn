@@ -2,10 +2,23 @@
 
 [node name="Property" type="Node2D" unique_id=1635707719]
 
-[node name="GraphNode" type="GraphNode" parent="." unique_id=1984431856]
-offset_left = 1.0
-offset_top = -1.0
-offset_right = 63.0
-offset_bottom = 54.0
-resizable = true
-title = "Property"
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1126164899]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1916246349]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1081650947]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1671118891]
+layout_mode = 2
+text = "Property"
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1176734042]
+layout_mode = 2

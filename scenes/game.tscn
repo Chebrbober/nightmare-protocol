@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://c0awy1wjbsw60"]
 
 [ext_resource type="Script" uid="uid://kqcvrhntbqac" path="res://scripts/game.gd" id="1_uwrxv"]
-[ext_resource type="Script" uid="uid://dmwuurve8dpma" path="res://scripts/spawn_button.gd" id="2_yqjtg"]
+[ext_resource type="ButtonGroup" uid="uid://beto6fx5kvc4n" path="res://resources/spawn_button_group.tres" id="2_lnu2h"]
+[ext_resource type="Script" uid="uid://dmwuurve8dpma" path="res://scripts/attribute_button.gd" id="2_yqjtg"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8cj0n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
+size = Vector2(640, 360)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uwrxv"]
 distance = -176.0
@@ -13,12 +17,14 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_uwrxv")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1469479735]
-modulate = Color(0.05882353, 0, 0.16862746, 1)
+modulate = Color(0.09415329, 0.20891497, 0.2986514, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +32,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CanvasTexture_8cj0n")
+
+[node name="SpawnArea" type="Area2D" parent="." unique_id=1208177727]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnArea" unique_id=865046939]
+position = Vector2(321, 180)
+shape = SubResource("RectangleShape2D_lnu2h")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=374527495]
 layout_mode = 1
@@ -39,11 +52,17 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="Button" type="Button" parent="MarginContainer" unique_id=1011461480]
+[node name="Exit" type="Button" parent="MarginContainer" unique_id=1011461480]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Exit"
+
+[node name="Compile" type="Button" parent="MarginContainer" unique_id=933902950]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Compile"
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=835842327]
 layout_mode = 2
@@ -60,14 +79,25 @@ theme_override_constants/margin_bottom = 3
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="SpawnButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=770043042]
+[node name="AttributeButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=61823767]
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
+toggle_mode = true
+button_group = ExtResource("2_lnu2h")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 script = ExtResource("2_yqjtg")
 metadata/_custom_type_script = "uid://dmwuurve8dpma"
 
 [node name="Area2D" type="Area2D" parent="." unique_id=879890457]
+position = Vector2(315, 112)
+collision_mask = 0
+input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=283807377]
 shape = SubResource("WorldBoundaryShape2D_uwrxv")
 
-[connection signal="pressed" from="MarginContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="input_event" from="SpawnArea" to="." method="_on_spawn_area_input_event"]
+[connection signal="pressed" from="MarginContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MarginContainer/Compile" to="." method="_on_compile_pressed"]

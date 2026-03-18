@@ -70,7 +70,11 @@ func _on_exit_pressed() -> void:
 	scene_manager._change_scene(self, "main_menu")
 
 func _on_compile_pressed() -> void:
-	pass # Replace with function body.
+	print("Compile button pressed")
+	var all_nodes = get_tree().get_nodes_in_group("objects")
+	for node in all_nodes:
+		if node is Object:
+			node.set_process(true)
 
 func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -80,13 +84,8 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			var object_scene = load("res://scenes/object.tscn") as PackedScene
 			var object_instance = object_scene.instantiate()
 			object_instance.position = event.position
-			var sprite = object_instance.get_node("Sprite2D") as Sprite2D
-			if sprite:
-				sprite.texture = object_data.texture
-			var collision_shape = object_instance.get_node("Area2D/CollisionShape2D") as CollisionShape2D
-			if collision_shape and object_data.shape:
-				collision_shape.shape = object_data.shape
 			add_child(object_instance)
+			object_instance.setup(object_data)
 		elif current_attribute_data is PropertyData:
 			print("Spawning property: ", current_attribute_data.name)
 			var property_data = current_attribute_data as PropertyData

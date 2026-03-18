@@ -2,6 +2,10 @@ extends Node
 
 @export var gravity_value: float = 1.0
 @export var mass: float = 1.0
+var max_gravity_value: float = 8.0
+var min_gravity_value: float = -(max_gravity_value)
+var max_mass_value: float = 1000.0
+var min_mass_value: float = -(max_mass_value)
 
 func _ready() -> void:
 	var body = get_parent()

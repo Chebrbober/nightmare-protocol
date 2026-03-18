@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://bvgnl45trqfhh"]
 
+[ext_resource type="Script" uid="uid://btpqiewnjm0qk" path="res://scripts/object.gd" id="1_pkda2"]
+
 [node name="Object" type="RigidBody2D" unique_id=1419311971]
+process_mode = 4
 physics_interpolation_mode = 2
+script = ExtResource("1_pkda2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1391266453]
 

@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var vbox_container = $PanelContainer/MarginContainer/VBoxContainer
+@onready var vbox_container = $PanelContainer/MarginContainer/ScrollContainer/VBoxContainer
 @onready var label = vbox_container.get_node("Label")
 
 var values: Dictionary = {}

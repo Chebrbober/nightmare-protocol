@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://kqcvrhntbqac" path="res://scripts/game.gd" id="1_uwrxv"]
 [ext_resource type="ButtonGroup" uid="uid://beto6fx5kvc4n" path="res://resources/spawn_button_group.tres" id="2_lnu2h"]
 [ext_resource type="Script" uid="uid://dmwuurve8dpma" path="res://scripts/attribute_button.gd" id="2_yqjtg"]
+[ext_resource type="Script" uid="uid://bwpjh32wncetc" path="res://scripts/drag_line.gd" id="4_lbhrr"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8cj0n"]
 
@@ -34,7 +35,8 @@ grow_vertical = 2
 texture = SubResource("CanvasTexture_8cj0n")
 
 [node name="SpawnArea" type="Area2D" parent="." unique_id=1208177727]
-collision_layer = 3
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnArea" unique_id=865046939]
 position = Vector2(321, 180)
@@ -92,11 +94,16 @@ metadata/_custom_type_script = "uid://dmwuurve8dpma"
 
 [node name="Area2D" type="Area2D" parent="." unique_id=879890457]
 position = Vector2(315, 112)
-collision_mask = 0
+collision_mask = 31
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=283807377]
 shape = SubResource("WorldBoundaryShape2D_uwrxv")
+
+[node name="DragLine" type="Line2D" parent="." unique_id=20598215]
+script = ExtResource("4_lbhrr")
+
+[node name="ConnnectionLines" type="Node2D" parent="." unique_id=1924246402]
 
 [connection signal="input_event" from="SpawnArea" to="." method="_on_spawn_area_input_event"]
 [connection signal="pressed" from="MarginContainer/Exit" to="." method="_on_exit_pressed"]

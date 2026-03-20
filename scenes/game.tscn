@@ -4,6 +4,7 @@
 [ext_resource type="ButtonGroup" uid="uid://beto6fx5kvc4n" path="res://resources/spawn_button_group.tres" id="2_lnu2h"]
 [ext_resource type="Script" uid="uid://dmwuurve8dpma" path="res://scripts/attribute_button.gd" id="2_yqjtg"]
 [ext_resource type="Script" uid="uid://bwpjh32wncetc" path="res://scripts/drag_line.gd" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://q0aycjrein5m" path="res://scenes/task.tscn" id="5_iywne"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8cj0n"]
 
@@ -104,6 +105,9 @@ shape = SubResource("WorldBoundaryShape2D_uwrxv")
 script = ExtResource("4_lbhrr")
 
 [node name="ConnnectionLines" type="Node2D" parent="." unique_id=1924246402]
+
+[node name="Task" parent="." unique_id=554647325 instance=ExtResource("5_iywne")]
+layout_mode = 1
 
 [connection signal="input_event" from="SpawnArea" to="." method="_on_spawn_area_input_event"]
 [connection signal="pressed" from="MarginContainer/Exit" to="." method="_on_exit_pressed"]

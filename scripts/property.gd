@@ -1,9 +1,9 @@
-extends Node2D
+extends Control
 
 @onready
-var vbox_container = $PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer
+var vbox_container = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer
 @onready var connection_point = $ConnectionPoint
-@onready var label = $PanelContainer/VBoxContainer/TitleBar/Label
+@onready var label = $PanelContainer/MarginContainer/VBoxContainer/TitleBar/Label
 
 var values: Dictionary = {}
 var current_data: PropertyData

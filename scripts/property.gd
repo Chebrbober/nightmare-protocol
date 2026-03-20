@@ -1,8 +1,9 @@
 extends Node2D
 
-@onready var vbox_container = $PanelContainer/MarginContainer/ScrollContainer/VBoxContainer
+@onready
+var vbox_container = $PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer
 @onready var connection_point = $ConnectionPoint
-@onready var label = vbox_container.get_node("Label")
+@onready var label = $PanelContainer/VBoxContainer/TitleBar/Label
 
 var values: Dictionary = {}
 var current_data: PropertyData
@@ -15,7 +16,6 @@ func setup(data: PropertyData) -> void:
 	label.text = data.name
 	values.clear()
 	connection_point.owner_node = self
-	connection_point.drag_started.connect(_on_drag_started)
 
 	for child in vbox_container.get_children():
 		if child != label:
@@ -206,3 +206,8 @@ func get_max_value(prop_name: String, prop_type: int) -> float:
 
 func _on_drag_started(point: Control) -> void:
 	drag_started.emit(point)
+
+
+func _gui_input(event: InputEvent):
+	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		position += event.relative

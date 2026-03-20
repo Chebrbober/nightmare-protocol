@@ -10,26 +10,37 @@ script = ExtResource("1_8tfsl")
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1916246349]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=461259270]
+layout_mode = 2
+
+[node name="TitleBar" type="PanelContainer" parent="PanelContainer/VBoxContainer" unique_id=611855471]
+layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.63
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TitleBar" unique_id=1671118891]
+layout_mode = 2
+text = "Property"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer" unique_id=1916246349]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer" unique_id=710491760]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer" unique_id=710491760]
 custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
+size_flags_vertical = 8
 theme_override_constants/scrollbar_h_separation = 3
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer" unique_id=1081650947]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer" unique_id=1081650947]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1671118891]
-layout_mode = 2
-text = "Property"
-horizontal_alignment = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="ConnectionPoint" type="Control" parent="." unique_id=2041320307]
 layout_mode = 3
@@ -45,3 +56,7 @@ offset_bottom = 8.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_0561r")
+
+[connection signal="gui_input" from="PanelContainer/VBoxContainer/TitleBar" to="." method="_gui_input"]
+[connection signal="gui_input" from="PanelContainer/VBoxContainer/TitleBar/Label" to="." method="_gui_input"]
+[connection signal="drag_started" from="ConnectionPoint" to="." method="_on_drag_started"]

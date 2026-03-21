@@ -1,9 +1,9 @@
 extends Control
 
-@onready var text_label = $PanelContainer/MarginContainer/VBoxContaoiner/Label
+@onready var text_label = $FoldableContainer/Text
 
 
-func set_ticket(text: String) -> void:
+func set_task(text: String) -> void:
 	text_label.text = text
 
 

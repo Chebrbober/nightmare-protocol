@@ -29,5 +29,6 @@ title_alignment = 1
 [node name="Text" type="Label" parent="FoldableContainer" unique_id=795898085]
 visible = false
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "Task text"
 vertical_alignment = 1

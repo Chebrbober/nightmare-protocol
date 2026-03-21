@@ -7,9 +7,14 @@ var attribute_button: AttributeButton = $MarginContainer/PanelContainer/MarginCo
 @onready var spawn_area: Area2D = $SpawnArea
 @onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
 @onready var drag_line: Line2D = $DragLine
+@onready var task_node: Control = $Task
 
 var current_attribute_data: AttributeData
 var dragging_from: Control
+
+var task_generator: TaskGenerator
+var property_list = []
+var object_list = []
 
 
 func _ready() -> void:
@@ -43,6 +48,7 @@ func _ready() -> void:
 					attribute_button_instance.connect(
 						"attribute_toggled", Callable(self, "_on_attribute_button_toggled")
 					)
+					object_list.append(object_data)
 
 			file_name = object_res_dir.get_next()
 
@@ -70,10 +76,15 @@ func _ready() -> void:
 					attribute_button_instance.connect(
 						"attribute_toggled", Callable(self, "_on_attribute_button_toggled")
 					)
+					property_list.append(property_data)
 
 			file_name = property_res_dir.get_next()
 
 	$MarginContainer/PanelContainer/MarginContainer/VBoxContainer/AttributeButton.visible = false
+
+	task_generator = TaskGenerator.new()
+	add_child(task_generator)
+	generate_task()
 
 
 func _on_attribute_button_toggled(attribute_data: AttributeData, is_pressed: bool) -> void:
@@ -133,3 +144,8 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 
 func _try_connect(mouse_pos: Vector2) -> void:
 	pass
+
+
+func generate_task() -> void:
+	var text = task_generator.generate(object_list, property_list)
+	task_node.set_task(text)

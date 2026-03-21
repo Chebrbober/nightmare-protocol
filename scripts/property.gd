@@ -4,9 +4,12 @@ extends Control
 var vbox_container = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer
 @onready var connection_point = $ConnectionPoint
 @onready var label = $PanelContainer/MarginContainer/VBoxContainer/TitleBar/Label
+@onready var resize_button = $PanelContainer/MarginContainer/VBoxContainer/Resize
 
 var values: Dictionary = {}
 var current_data: PropertyData
+var is_resizing: bool = false
+var min_size: Vector2 = Vector2(75, 130)
 
 signal drag_started(from_point)
 
@@ -209,5 +212,9 @@ func _on_drag_started(point: Control) -> void:
 
 
 func _gui_input(event: InputEvent):
-	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if (
+		event is InputEventMouseMotion
+		and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+		and not is_resizing
+	):
 		position += event.relative

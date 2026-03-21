@@ -2,16 +2,26 @@
 
 [ext_resource type="Script" uid="uid://bd4v77t4pekfn" path="res://scripts/property.gd" id="1_8tfsl"]
 [ext_resource type="Script" uid="uid://dnlql5cmof07w" path="res://scripts/connection_point.gd" id="2_0561r"]
+[ext_resource type="Script" uid="uid://ck3orbbrba44b" path="res://addons/eranot.resizable/resizable.gd" id="3_vle8t"]
 
 [node name="Property" type="Control" unique_id=1072672420]
+custom_minimum_size = Vector2(75, 130)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_8tfsl")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1126164899]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Resizeable" type="Control" parent="PanelContainer" unique_id=507849916]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_vle8t")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1916246349]
 layout_mode = 2

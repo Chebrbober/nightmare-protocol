@@ -6,15 +6,18 @@ extends Control
 var attribute_button: AttributeButton = $MarginContainer/PanelContainer/MarginContainer/VBoxContainer/AttributeButton
 @onready var spawn_area: Area2D = $SpawnArea
 @onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
-@onready var drag_line: Line2D = $DragLine
 @onready var task_node: Control = $Task
+@onready var drag_line: Line2D = $DragLine
 
 var current_attribute_data: AttributeData
 var dragging_from: Control
 
 var task_generator: TaskGenerator
+var connections: Dictionary = {}
+var connection_lines: Dictionary = {}
 var property_list = []
 var object_list = []
+var active_connection: Dictionary = {}
 
 
 func _ready() -> void:
@@ -116,9 +119,9 @@ func _on_property_drag_started(from_point: Control) -> void:
 	while Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		await get_tree().process_frame
 
-	_try_connect(get_global_mouse_position())
-	dragging_from = null
-	drag_line.stop()
+	var connection_made = _try_connect(get_global_mouse_position())
+	if not connection_made:
+		drag_line.stop()
 
 
 func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -142,8 +145,65 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			property_instance.drag_started.connect(_on_property_drag_started)
 
 
-func _try_connect(mouse_pos: Vector2) -> void:
-	pass
+func _try_connect(mouse_pos: Vector2) -> bool:
+	var all_objects = get_tree().get_nodes_in_group("objects")
+	for obj in all_objects:
+		if not obj is RigidBody2D:
+			continue
+		var sprite = obj.get_node("Sprite2D")
+		if not sprite or not sprite.texture:
+			continue
+		var texture_size = sprite.texture.get_size()
+		var obj_rect = Rect2(obj.global_position - texture_size / 2, texture_size)
+		if obj_rect.has_point(mouse_pos):
+			_make_connection(dragging_from.owner_node, obj)
+			return true
+	return false
+
+
+func _make_connection(property: Node, obj: RigidBody2D) -> void:
+	var prop_data = property.current_data as PropertyData
+	var obj_data = obj.current_data as ObjectData
+
+	for tag in prop_data.incompatible_tags:
+		if tag in obj_data.tags:
+			print("Incompatible: ", tag)
+			return
+
+	if not connections.has(obj):
+		connections[obj] = []
+	connections[obj].append(property)
+
+	drag_line.is_persistent = true
+	drag_line.active = true
+
+	if not connection_lines.has(obj):
+		connection_lines[obj] = []
+	connection_lines[obj].append({"property": property, "line": drag_line})
+
+	print("Connected: ", prop_data.name, " -> ", obj_data.name)
+
+
+func _process(_delta: float) -> void:
+	for obj in connection_lines.keys():
+		if not is_instance_valid(obj):
+			connection_lines.erase(obj)
+			continue
+
+		for connection in connection_lines[obj]:
+			var property = connection["property"]
+			var line = connection["line"]
+
+			if not is_instance_valid(property) or not is_instance_valid(line):
+				continue
+
+			if line.get_point_count() >= 2:
+				var start_pos = (
+					property.connection_point.global_position + Vector2(8, 8) - line.global_position
+				)
+				var end_pos = obj.global_position - line.global_position
+				line.set_point_position(0, start_pos)
+				line.set_point_position(1, end_pos)
 
 
 func generate_task() -> void:

@@ -4,7 +4,6 @@ extends Control
 var vbox_container = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer
 @onready var connection_point = $ConnectionPoint
 @onready var label = $PanelContainer/MarginContainer/VBoxContainer/TitleBar/Label
-@onready var resize_button = $PanelContainer/MarginContainer/VBoxContainer/Resize
 
 var values: Dictionary = {}
 var current_data: PropertyData

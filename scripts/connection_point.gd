@@ -3,7 +3,7 @@ extends Control
 signal connected(from_point, to_point)
 signal drag_started(from_point)
 
-var circle_size: Vector2 = Vector2(8, 8)
+var point_size: Vector2 = Vector2(8, 8)
 var is_dragging: bool = false
 var owner_node: Node
 
@@ -11,8 +11,8 @@ var owner_node: Node
 func _process(_delta: float) -> void:
 	var panel = get_parent().get_node("PanelContainer")
 	position = Vector2(
-		panel.position.x + panel.size.x + circle_size.x / 2.0,
-		panel.position.y + panel.size.y / 2.0 - circle_size.y / 2.0
+		panel.position.x + panel.size.x + point_size.x / 2.0,
+		panel.position.y + panel.size.y / 2.0 - point_size.y / 2.0
 	)
 
 
@@ -27,4 +27,4 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func _draw() -> void:
-	draw_circle(Vector2(circle_size), 8, Color.WHITE)
+	draw_circle(Vector2(point_size), 8, Color.WHITE)

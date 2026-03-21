@@ -11,7 +11,8 @@ var owner_node: Node
 func _process(_delta: float) -> void:
 	var panel = get_parent().get_node("PanelContainer")
 	position = Vector2(
-		panel.position.x + panel.size.x, panel.position.y + panel.size.y / 2.0 - circle_size.y / 2.0
+		panel.position.x + panel.size.x + circle_size.x / 2.0,
+		panel.position.y + panel.size.y / 2.0 - circle_size.y / 2.0
 	)
 
 

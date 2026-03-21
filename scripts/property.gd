@@ -64,6 +64,7 @@ func setup(data: PropertyData) -> void:
 
 func _create_slider(prop_name: String, value: Variant, prop_type: int) -> void:
 	var panel_container = PanelContainer.new()
+	panel_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 	var margin_container = MarginContainer.new()
 	margin_container.add_theme_constant_override("margin_left", 3)
@@ -82,11 +83,12 @@ func _create_slider(prop_name: String, value: Variant, prop_type: int) -> void:
 	var hbox = HBoxContainer.new()
 
 	var slider = HSlider.new()
+	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	slider.min_value = get_min_value(prop_name, prop_type)
 	slider.max_value = get_max_value(prop_name, prop_type)
 	slider.step = 1 if prop_type == TYPE_INT else 0.01
 	slider.value = value
-	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	slider.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 	var value_label = Label.new()
 	value_label.text = str(value)
@@ -107,6 +109,7 @@ func _create_slider(prop_name: String, value: Variant, prop_type: int) -> void:
 
 func _create_checkbox(prop_name: String, value: Variant) -> void:
 	var panel_container = PanelContainer.new()
+	panel_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 	var margin_container = MarginContainer.new()
 	margin_container.add_theme_constant_override("margin_left", 3)
@@ -136,6 +139,7 @@ func _create_color_picker(
 	value: Variant,
 ) -> void:
 	var panel_container = PanelContainer.new()
+	panel_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 	var margin_container = MarginContainer.new()
 	margin_container.add_theme_constant_override("margin_left", 3)
@@ -165,6 +169,7 @@ func _create_text_edit(
 	value: Variant,
 ) -> void:
 	var panel_container = PanelContainer.new()
+	panel_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 	var margin_container = MarginContainer.new()
 	margin_container.add_theme_constant_override("margin_left", 3)

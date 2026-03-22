@@ -11,7 +11,7 @@ func start(point: Control) -> void:
 	from_point = point
 	clear_points()
 	var point_size = point.size
-	var start_pos = point.global_position + Vector2(8, 8) - global_position
+	var start_pos = point.global_position + point_size - global_position
 	add_point(start_pos)
 	add_point(start_pos)
 
@@ -25,5 +25,5 @@ func stop() -> void:
 func _process(_delta: float) -> void:
 	if not active or is_persistent:
 		return
-	set_point_position(0, from_point.global_position + Vector2(8, 8) - global_position)
+	set_point_position(0, from_point.global_position + from_point.point_size - global_position)
 	set_point_position(1, get_global_mouse_position() - global_position)

@@ -1,5 +1,6 @@
 extends Control
 
+@onready var panel = $PanelContainer
 @onready
 var vbox_container = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer
 @onready var connection_point = $ConnectionPoint
@@ -9,8 +10,6 @@ var values: Dictionary = {}
 var current_data: PropertyData
 var is_resizing: bool = false
 var min_size: Vector2 = Vector2(75, 130)
-
-signal drag_started(from_point)
 
 
 func setup(data: PropertyData) -> void:
@@ -209,10 +208,6 @@ func get_max_value(prop_name: String, prop_type: int) -> float:
 	if max_key in current_data.logic:
 		return current_data.logic.get_variable(max_key)
 	return 100.0
-
-
-func _on_drag_started(point: Control) -> void:
-	drag_started.emit(point)
 
 
 func _gui_input(event: InputEvent):

@@ -111,7 +111,7 @@ func _on_compile_pressed() -> void:
 			node.set_process(true)
 
 
-func _on_property_drag_started(from_point: Control) -> void:
+func _on_property_drag_line_started(from_point: Control) -> void:
 	dragging_from = from_point
 	drag_line.start(from_point)
 
@@ -142,7 +142,11 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			property_instance.position = event.position
 			add_child(property_instance)
 			property_instance.setup(property_data)
-			property_instance.drag_started.connect(_on_property_drag_started)
+			property_instance.panel.item_rect_changed.connect(_on_property_item_rect_changed)
+			property_instance.item_rect_changed.connect(_on_property_item_rect_changed)
+			property_instance.connection_point.drag_line_started.connect(
+				_on_property_drag_line_started
+			)
 
 
 func _try_connect(mouse_pos: Vector2) -> bool:
@@ -184,7 +188,7 @@ func _make_connection(property: Node, obj: RigidBody2D) -> void:
 	print("Connected: ", prop_data.name, " -> ", obj_data.name)
 
 
-func _process(_delta: float) -> void:
+func _on_property_item_rect_changed() -> void:
 	for obj in connection_lines.keys():
 		if not is_instance_valid(obj):
 			connection_lines.erase(obj)
@@ -199,7 +203,9 @@ func _process(_delta: float) -> void:
 
 			if line.get_point_count() >= 2:
 				var start_pos = (
-					property.connection_point.global_position + Vector2(8, 8) - line.global_position
+					property.connection_point.global_position
+					+ property.connection_point.point_size
+					- line.global_position
 				)
 				var end_pos = obj.global_position - line.global_position
 				line.set_point_position(0, start_pos)

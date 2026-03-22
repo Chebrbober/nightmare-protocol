@@ -2,6 +2,7 @@ extends RigidBody2D
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var sprite: Sprite2D = $Sprite2D
+@export var logic: Script
 var values: Dictionary = {}
 var current_data: ObjectData
 

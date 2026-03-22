@@ -110,7 +110,7 @@ func _on_compile_pressed() -> void:
 	var all_nodes = get_tree().get_nodes_in_group("objects")
 
 	for obj in connections.keys():
-		if not is_instance_valid(object_list):
+		if not is_instance_valid(obj):
 			continue
 
 		for property in connections[obj]:
@@ -121,9 +121,22 @@ func _on_compile_pressed() -> void:
 
 
 func _apply_property_to_object(property: Node, obj: RigidBody2D) -> void:
-	var prop_data = property.current_data as PropertyData
+	print("Property current_data: ", property.current_data)
+	print(
+		"Property current_data type: ",
+		property.current_data.get_class() if property.current_data else "null"
+	)
 
-	if not prop_data or not prop_data.lgoci:
+	var prop_data = property.current_data as PropertyData
+	print("After cast, prop_data: ", prop_data)
+
+	if not prop_data or not prop_data.logic:
+		print(
+			"Early return - prop_data:",
+			prop_data,
+			" logic:",
+			prop_data.logic if prop_data else "N/A"
+		)
 		return
 
 	var logic_node = Node.new()
@@ -131,6 +144,8 @@ func _apply_property_to_object(property: Node, obj: RigidBody2D) -> void:
 
 	for key in property.values.keys():
 		logic_node.set(key, property.values[key])
+
+	obj.process_mode = Node.PROCESS_MODE_INHERIT
 
 	obj.add_child(logic_node)
 	print("Applied: ", prop_data.name, " -> ", obj.current_data.name)

@@ -1,3 +1,4 @@
+class_name GravityProperty
 extends Node
 
 @export var gravity: float = 1.0

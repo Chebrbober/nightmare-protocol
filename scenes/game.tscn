@@ -93,12 +93,12 @@ expand_icon = true
 script = ExtResource("2_yqjtg")
 metadata/_custom_type_script = "uid://dmwuurve8dpma"
 
-[node name="Area2D" type="Area2D" parent="." unique_id=879890457]
+[node name="Ground" type="Area2D" parent="." unique_id=879890457]
 position = Vector2(315, 112)
 collision_mask = 31
 input_pickable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=283807377]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=283807377]
 shape = SubResource("WorldBoundaryShape2D_uwrxv")
 
 [node name="ConnectionLines" type="Node2D" parent="." unique_id=1924246402]
@@ -110,6 +110,10 @@ layout_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 script = ExtResource("4_lbhrr")
+
+[node name="PropertiesContainer" type="Node2D" parent="." unique_id=833202965]
+
+[node name="ObjectsContainer" type="Node2D" parent="." unique_id=303040444]
 
 [connection signal="input_event" from="SpawnArea" to="." method="_on_spawn_area_input_event"]
 [connection signal="pressed" from="MarginContainer/Exit" to="." method="_on_exit_pressed"]

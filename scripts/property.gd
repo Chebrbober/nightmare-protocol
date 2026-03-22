@@ -40,6 +40,8 @@ func setup(data: PropertyData) -> void:
 		var prop_name = prop.name
 		if prop_name.begins_with("_"):
 			continue
+		if prop_name.begins_with("min") or prop_name.begins_with("max"):
+			continue
 		var prop_type = prop.type
 		var prop_value = temp_node.get(prop_name)
 		values[prop_name] = prop_value
@@ -63,6 +65,7 @@ func setup(data: PropertyData) -> void:
 func _create_slider(prop_name: String, value: Variant, prop_type: int) -> void:
 	var panel_container = PanelContainer.new()
 	panel_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	print(prop_name)
 
 	var margin_container = MarginContainer.new()
 	margin_container.add_theme_constant_override("margin_left", 3)
@@ -136,6 +139,7 @@ func _create_color_picker(
 	prop_name: String,
 	value: Variant,
 ) -> void:
+	print(prop_name)
 	var panel_container = PanelContainer.new()
 	panel_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
@@ -198,15 +202,27 @@ func format_prop_name(prop_name: String) -> String:
 
 func get_min_value(prop_name: String, prop_type: int) -> float:
 	var min_key = "min_" + prop_name + "_value"
-	if min_key in current_data.logic:
-		return current_data.logic.get_variable(min_key)
+	var temp_node = Node.new()
+	temp_node.set_script(current_data.logic)
+	if temp_node.get(min_key) != null:
+		print("found min value")
+		var result = temp_node.get(min_key)
+		temp_node.free()
+		return result
+	temp_node.free()
 	return 0.0
 
 
 func get_max_value(prop_name: String, prop_type: int) -> float:
 	var max_key = "max_" + prop_name + "_value"
-	if max_key in current_data.logic:
-		return current_data.logic.get_variable(max_key)
+	var temp_node = Node.new()
+	temp_node.set_script(current_data.logic)
+	if temp_node.get(max_key) != null:
+		print("found max value")
+		var result = temp_node.get(max_key)
+		temp_node.free()
+		return result
+	temp_node.free()
 	return 100.0
 
 

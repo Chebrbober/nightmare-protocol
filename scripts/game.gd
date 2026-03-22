@@ -8,6 +8,8 @@ var attribute_button: AttributeButton = $MarginContainer/PanelContainer/MarginCo
 @onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
 @onready var task_node: Control = $Task
 @onready var drag_line: Line2D = $DragLine
+@onready var objects_container: Node2D = $ObjectsContainer
+@onready var properties_container: Node2D = $PropertiesContainer
 
 var current_attribute_data: AttributeData
 var dragging_from: Control
@@ -106,9 +108,32 @@ func _on_exit_pressed() -> void:
 func _on_compile_pressed() -> void:
 	print("Compile button pressed")
 	var all_nodes = get_tree().get_nodes_in_group("objects")
-	for node in all_nodes:
-		if node is Object:
-			node.set_process(true)
+
+	for obj in connections.keys():
+		if not is_instance_valid(object_list):
+			continue
+
+		for property in connections[obj]:
+			if not is_instance_valid(property):
+				continue
+
+			_apply_property_to_object(property, obj)
+
+
+func _apply_property_to_object(property: Node, obj: RigidBody2D) -> void:
+	var prop_data = property.current_data as PropertyData
+
+	if not prop_data or not prop_data.lgoci:
+		return
+
+	var logic_node = Node.new()
+	logic_node.set_script(prop_data.logic)
+
+	for key in property.values.keys():
+		logic_node.set(key, property.values[key])
+
+	obj.add_child(logic_node)
+	print("Applied: ", prop_data.name, " -> ", obj.current_data.name)
 
 
 func _on_property_drag_line_started(from_point: Control) -> void:
@@ -132,7 +157,7 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			var object_scene = load("res://scenes/object.tscn") as PackedScene
 			var object_instance = object_scene.instantiate()
 			object_instance.position = event.position
-			add_child(object_instance)
+			objects_container.add_child(object_instance)
 			object_instance.setup(object_data)
 		elif current_attribute_data is PropertyData:
 			print("Spawning property: ", current_attribute_data.name)
@@ -140,7 +165,7 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			var property_scene = load("res://scenes/property.tscn") as PackedScene
 			var property_instance = property_scene.instantiate()
 			property_instance.position = event.position
-			add_child(property_instance)
+			properties_container.add_child(property_instance)
 			property_instance.setup(property_data)
 			property_instance.panel.item_rect_changed.connect(_on_property_item_rect_changed)
 			property_instance.item_rect_changed.connect(_on_property_item_rect_changed)

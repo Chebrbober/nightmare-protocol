@@ -5,6 +5,12 @@ var is_persistent: bool = false
 var from_point: Control
 
 
+func _ready() -> void:
+	width = 10
+	begin_cap_mode = Line2D.LINE_CAP_ROUND
+	end_cap_mode = Line2D.LINE_CAP_ROUND
+
+
 func start(point: Control) -> void:
 	active = true
 	is_persistent = false

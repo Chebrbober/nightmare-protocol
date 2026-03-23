@@ -7,7 +7,6 @@ var attribute_button: AttributeButton = $MarginContainer/PanelContainer/MarginCo
 @onready var spawn_area: Area2D = $SpawnArea
 @onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
 @onready var task_node: Control = $Task
-@onready var drag_line: Line2D = $DragLine
 @onready var objects_container: Node2D = $ObjectsContainer
 @onready var properties_container: Node2D = $PropertiesContainer
 
@@ -20,6 +19,7 @@ var connection_lines: Dictionary = {}
 var property_list = []
 var object_list = []
 var active_connection: Dictionary = {}
+var current_drag_line: Line2D = null
 
 
 func _ready() -> void:
@@ -145,15 +145,21 @@ func _apply_property_to_object(property: Node, obj: RigidBody2D) -> void:
 
 func _on_property_drag_line_started(from_point: Control) -> void:
 	dragging_from = from_point
-	drag_line.start(from_point)
+
+	current_drag_line = preload("res://scripts/drag_line.gd").new()
+	add_child(current_drag_line)
+	current_drag_line.start(from_point)
 
 	await get_tree().create_timer(0.0).timeout
 	while Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		await get_tree().process_frame
 
 	var connection_made = _try_connect(get_global_mouse_position())
-	if not connection_made:
-		drag_line.stop()
+	if connection_made:
+		current_drag_line.is_persistent = true
+	else:
+		current_drag_line.queue_free()
+		current_drag_line = null
 
 
 func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -204,18 +210,17 @@ func _make_connection(property: Node, obj: RigidBody2D) -> void:
 	for tag in prop_data.incompatible_tags:
 		if tag in obj_data.tags:
 			print("Incompatible: ", tag)
+			current_drag_line.queue_free()
+			current_drag_line = null
 			return
 
 	if not connections.has(obj):
 		connections[obj] = []
 	connections[obj].append(property)
 
-	drag_line.is_persistent = true
-	drag_line.active = true
-
 	if not connection_lines.has(obj):
 		connection_lines[obj] = []
-	connection_lines[obj].append({"property": property, "line": drag_line})
+	connection_lines[obj].append({"property": property, "line": current_drag_line})
 
 	print("Connected: ", prop_data.name, " -> ", obj_data.name)
 

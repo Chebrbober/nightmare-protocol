@@ -2,8 +2,7 @@ extends Control
 
 @export_dir var path_to_object_resources = "res://resources/objects/"
 @export_dir var path_to_property_resources = "res://resources/properties/"
-@onready
-var attribute_button: AttributeButton = $MarginContainer/PanelContainer/MarginContainer/VBoxContainer/AttributeButton
+@onready var attribute_button: AttributeButton = %AttributeButton
 @onready var spawn_area: Area2D = $SpawnArea
 @onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
 @onready var task_node: Control = $Task
@@ -12,17 +11,16 @@ var attribute_button: AttributeButton = $MarginContainer/PanelContainer/MarginCo
 
 var current_attribute_data: AttributeData
 var dragging_from: Control
-
 var task_generator: TaskGenerator
-var connections: Dictionary = {}
-var connection_lines: Dictionary = {}
+var connection_manager: Object
 var property_list = []
 var object_list = []
-var active_connection: Dictionary = {}
+var spawned_properties = []
 var current_drag_line: Line2D = null
 
 
 func _ready() -> void:
+	connection_manager = load("res://scripts/connection_manager.gd").new()
 	collision_shape.shape.size = self.size
 	collision_shape.position = self.size / 2
 	var object_res_dir = DirAccess.open(path_to_object_resources)
@@ -109,11 +107,11 @@ func _on_compile_pressed() -> void:
 	print("Compile button pressed")
 	get_node("PropertiesContainer").hide()
 
-	for obj in connections.keys():
+	for obj in connection_manager.connections.keys():
 		if not is_instance_valid(obj):
 			continue
 
-		for property in connections[obj]:
+		for property in connection_manager.connections[obj]:
 			if not is_instance_valid(property):
 				continue
 
@@ -181,18 +179,19 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			property_instance.position = event.position
 			properties_container.add_child(property_instance)
 			property_instance.setup(property_data)
-			property_instance.panel.item_rect_changed.connect(_on_property_item_rect_changed)
-			property_instance.item_rect_changed.connect(_on_property_item_rect_changed)
+			property_instance.panel.item_rect_changed.connect(connection_manager.update_lines)
+			property_instance.item_rect_changed.connect(connection_manager.update_lines)
 			property_instance.connection_point.drag_line_started.connect(
 				_on_property_drag_line_started
 			)
+			spawned_properties.append(property_instance)
 
 	if (
 		event is InputEventMouseButton
 		and event.button_index == MOUSE_BUTTON_RIGHT
 		and event.pressed
 	):
-		if _try_disconnect(event.position):
+		if connection_manager.try_disconnect_at_point(event.position):
 			return
 
 
@@ -211,49 +210,6 @@ func _try_connect(mouse_pos: Vector2) -> bool:
 			return true
 	return false
 
-
-func _try_disconnect(mouse_pos: Vector2) -> bool:
-	for obj in connection_lines.keys():
-		for i in range(connection_lines[obj].size() - 1, -1, -1):
-			var connection = connection_lines[obj][i]
-			var line = connection["line"] as Line2D
-			var property = connection["property"]
-
-			if not is_instance_valid(line):
-				continue
-
-			if _is_point_near_line(mouse_pos, line):
-				line.queue_free()
-				connection_lines[obj].remove_at(i)
-
-				connections[obj].erase(property)
-				if connections[obj].is_empty():
-					connections.erase(obj)
-
-				return true
-	return false
-
-
-func _is_point_near_line(point: Vector2, line: Line2D) -> bool:
-	if line.get_point_count() < 2:
-		return false
-
-	var start = line.get_point_position(0) + line.global_position
-	var end = line.get_point_position(1) + line.global_position
-
-	var line_vec = end - start
-	var point_vec = point - start
-	var line_len = line_vec.length()
-
-	if line_len == 0:
-		return false
-
-	var t = clamp(point_vec.dot(line_vec) / (line_len * line_len), 0.0, 1.0)
-	var closest = start + line_vec * t
-
-	return point.distance_to(closest) < 5.0
-
-
 func _make_connection(property: Node, obj: RigidBody2D) -> void:
 	var prop_data = property.current_data as PropertyData
 	var obj_data = obj.current_data as ObjectData
@@ -265,39 +221,8 @@ func _make_connection(property: Node, obj: RigidBody2D) -> void:
 			current_drag_line = null
 			return
 
-	if not connections.has(obj):
-		connections[obj] = []
-	connections[obj].append(property)
-
-	if not connection_lines.has(obj):
-		connection_lines[obj] = []
-	connection_lines[obj].append({"property": property, "line": current_drag_line})
-
+	connection_manager.add_connection(obj, property, current_drag_line)
 	print("Connected: ", prop_data.name, " -> ", obj_data.name)
-
-
-func _on_property_item_rect_changed() -> void:
-	for obj in connection_lines.keys():
-		if not is_instance_valid(obj):
-			connection_lines.erase(obj)
-			continue
-
-		for connection in connection_lines[obj]:
-			var property = connection["property"]
-			var line = connection["line"]
-
-			if not is_instance_valid(property) or not is_instance_valid(line):
-				continue
-
-			if line.get_point_count() >= 2:
-				var start_pos = (
-					property.connection_point.global_position
-					+ property.connection_point.point_size
-					- line.global_position
-				)
-				var end_pos = obj.global_position - line.global_position
-				line.set_point_position(0, start_pos)
-				line.set_point_position(1, end_pos)
 
 
 func generate_task() -> void:

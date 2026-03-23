@@ -10,6 +10,7 @@ var values: Dictionary = {}
 var current_data: PropertyData
 var is_resizing: bool = false
 var min_size: Vector2 = Vector2(75, 130)
+var is_connected: bool = false
 
 
 func setup(data: PropertyData) -> void:

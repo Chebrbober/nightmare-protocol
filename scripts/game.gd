@@ -126,7 +126,7 @@ func _apply_property_to_object(property: Node, obj: RigidBody2D) -> void:
 		return
 
 	for child in obj.get_children():
-		if child.get_scirpt() == prop_data.lgoic:
+		if child.get_script() == prop_data.logic:
 			print("Property already applied: ", prop_data.name)
 			return
 

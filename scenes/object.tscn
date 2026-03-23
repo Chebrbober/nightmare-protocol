@@ -3,11 +3,13 @@
 [ext_resource type="Script" uid="uid://btpqiewnjm0qk" path="res://scripts/object.gd" id="1_pkda2"]
 
 [node name="Object" type="RigidBody2D" unique_id=1419311971]
-process_mode = 4
 physics_interpolation_mode = 2
 collision_mask = 3
+input_pickable = true
 script = ExtResource("1_pkda2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1391266453]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2090057023]
+
+[connection signal="input_event" from="." to="." method="_input_event"]

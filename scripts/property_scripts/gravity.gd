@@ -6,7 +6,7 @@ extends Node
 @export var max_gravity_value: float = 8.0
 @export var min_gravity_value: float = -(max_gravity_value)
 @export var max_mass_value: float = 1000.0
-@export var min_mass_value: float = 0.0
+@export var min_mass_value: float = 0.01
 
 
 func _ready() -> void:

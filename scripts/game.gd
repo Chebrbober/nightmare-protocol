@@ -107,7 +107,7 @@ func _on_exit_pressed() -> void:
 
 func _on_compile_pressed() -> void:
 	print("Compile button pressed")
-	var all_nodes = get_tree().get_nodes_in_group("objects")
+	get_node("PropertiesContainer").hide()
 
 	for obj in connections.keys():
 		if not is_instance_valid(obj):
@@ -147,7 +147,7 @@ func _on_property_drag_line_started(from_point: Control) -> void:
 	dragging_from = from_point
 
 	current_drag_line = preload("res://scripts/drag_line.gd").new()
-	add_child(current_drag_line)
+	properties_container.add_child(current_drag_line)
 	current_drag_line.start(from_point)
 
 	await get_tree().create_timer(0.0).timeout
@@ -172,6 +172,7 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			object_instance.position = event.position
 			objects_container.add_child(object_instance)
 			object_instance.setup(object_data)
+
 		elif current_attribute_data is PropertyData:
 			print("Spawning property: ", current_attribute_data.name)
 			var property_data = current_attribute_data as PropertyData
@@ -185,6 +186,14 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			property_instance.connection_point.drag_line_started.connect(
 				_on_property_drag_line_started
 			)
+
+	if (
+		event is InputEventMouseButton
+		and event.button_index == MOUSE_BUTTON_RIGHT
+		and event.pressed
+	):
+		if _try_disconnect(event.position):
+			return
 
 
 func _try_connect(mouse_pos: Vector2) -> bool:
@@ -201,6 +210,48 @@ func _try_connect(mouse_pos: Vector2) -> bool:
 			_make_connection(dragging_from.owner_node, obj)
 			return true
 	return false
+
+
+func _try_disconnect(mouse_pos: Vector2) -> bool:
+	for obj in connection_lines.keys():
+		for i in range(connection_lines[obj].size() - 1, -1, -1):
+			var connection = connection_lines[obj][i]
+			var line = connection["line"] as Line2D
+			var property = connection["property"]
+
+			if not is_instance_valid(line):
+				continue
+
+			if _is_point_near_line(mouse_pos, line):
+				line.queue_free()
+				connection_lines[obj].remove_at(i)
+
+				connections[obj].erase(property)
+				if connections[obj].is_empty():
+					connections.erase(obj)
+
+				return true
+	return false
+
+
+func _is_point_near_line(point: Vector2, line: Line2D) -> bool:
+	if line.get_point_count() < 2:
+		return false
+
+	var start = line.get_point_position(0) + line.global_position
+	var end = line.get_point_position(1) + line.global_position
+
+	var line_vec = end - start
+	var point_vec = point - start
+	var line_len = line_vec.length()
+
+	if line_len == 0:
+		return false
+
+	var t = clamp(point_vec.dot(line_vec) / (line_len * line_len), 0.0, 1.0)
+	var closest = start + line_vec * t
+
+	return point.distance_to(closest) < 5.0
 
 
 func _make_connection(property: Node, obj: RigidBody2D) -> void:

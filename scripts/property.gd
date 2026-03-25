@@ -85,18 +85,28 @@ func _create_slider(prop_name: String, value: Variant, prop_type: int) -> void:
 	slider.value = value
 	slider.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
-	var value_label = Label.new()
-	value_label.text = str(value)
-	value_label.custom_minimum_size.x = 40
+	var value_text_edit = TextEdit.new()
+	value_text_edit.text = str(value)
+	value_text_edit.custom_minimum_size.x = 50
+	value_text_edit.custom_minimum_size.y = 20
+	value_text_edit.add_theme_constant_override("line_spacing", -6)
 
 	slider.value_changed.connect(
 		func(v):
 			values[prop_name] = int(v) if prop_type == TYPE_INT else v
-			value_label.text = "%.2f" % v if prop_type == TYPE_FLOAT else str(int(v))
+			value_text_edit.text = "%.2f" % v if prop_type == TYPE_FLOAT else str(int(v))
+	)
+	value_text_edit.text_changed.connect(
+		func():
+			slider.value = (
+				float(value_text_edit.text)
+				if prop_type == TYPE_FLOAT
+				else int(value_text_edit.text)
+			)
 	)
 
 	hbox.add_child(slider)
-	hbox.add_child(value_label)
+	hbox.add_child(value_text_edit)
 	vbox.add_child(hbox)
 
 	vbox_container.add_child(panel_container)

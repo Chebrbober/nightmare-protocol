@@ -88,7 +88,7 @@ func generate(objects: Array, properties: Array) -> String:
 
 func _get_actions_for_property(prop: PropertyData) -> Array:
 	var result = []
-	for tag in prop.compatible_tags:
+	for tag in prop.action_tags:
 		if tag in TAG_ACTIONS:
 			result.append_array(TAG_ACTIONS[tag])
 	if result.is_empty():

@@ -46,10 +46,5 @@ offset_right = 10.0
 offset_bottom = 10.0
 script = ExtResource("2_0561r")
 
-[node name="TextEdit" type="TextEdit" parent="." unique_id=363720329]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-
 [connection signal="item_rect_changed" from="." to="ConnectionPoint" method="update_point_pos"]
 [connection signal="item_rect_changed" from="FoldableContainer" to="ConnectionPoint" method="update_point_pos"]

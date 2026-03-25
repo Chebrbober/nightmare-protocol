@@ -48,3 +48,4 @@ script = ExtResource("2_0561r")
 
 [connection signal="item_rect_changed" from="." to="ConnectionPoint" method="update_point_pos"]
 [connection signal="item_rect_changed" from="FoldableContainer" to="ConnectionPoint" method="update_point_pos"]
+[connection signal="visibility_changed" from="FoldableContainer/ScrollContainer" to="ConnectionPoint" method="update_point_pos"]

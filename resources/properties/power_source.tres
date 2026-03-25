@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PropertyData" format=3 uid="uid://btogooagq0h3w"]
+
+[ext_resource type="Script" uid="uid://bs6rks3lfl0jy" path="res://scripts/property_data.gd" id="1_arqje"]
+[ext_resource type="Script" uid="uid://m4y327wivsy4" path="res://scripts/property_scripts/power_source.gd" id="1_ehtw0"]
+
+[resource]
+script = ExtResource("1_arqje")
+logic = ExtResource("1_ehtw0")
+compatible_tags = Array[String](["metal", "electricity"])
+incompatible_tags = Array[String](["organic"])
+action_tags = Array[String](["electric"])
+name = "Power source"
+description = "Apply some voltage to the object"
+metadata/_custom_type_script = "uid://bs6rks3lfl0jy"

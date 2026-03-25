@@ -1,10 +1,8 @@
 extends Control
 
-@onready var panel = $PanelContainer
-@onready
-var vbox_container = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer
+@onready var vbox_container = $FoldableContainer/ScrollContainer/VBoxContainer
+@onready var foldable_container = $FoldableContainer
 @onready var connection_point = $ConnectionPoint
-@onready var label = $PanelContainer/MarginContainer/VBoxContainer/TitleBar/Label
 
 var values: Dictionary = {}
 var current_data: PropertyData
@@ -15,14 +13,9 @@ var is_connected: bool = false
 
 func setup(data: PropertyData) -> void:
 	current_data = data
-	label.text = data.name
+	foldable_container.title = data.name
 	values.clear()
 	connection_point.owner_node = self
-
-	for child in vbox_container.get_children():
-		if child != label:
-			vbox_container.remove_child(child)
-			child.free()
 
 	if not data.logic:
 		return

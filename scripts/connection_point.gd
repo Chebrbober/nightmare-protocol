@@ -8,7 +8,7 @@ var owner_node: Node
 
 
 func _ready() -> void:
-	_on_property_item_rect_changed()
+	update_point_pos()
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -25,9 +25,9 @@ func _draw() -> void:
 	draw_circle(Vector2(point_size), 8, Color.WHITE)
 
 
-func _on_property_item_rect_changed() -> void:
-	var panel = get_parent().get_node("PanelContainer")
+func update_point_pos() -> void:
+	var foldable_container = get_parent().get_node("FoldableContainer")
 	position = Vector2(
-		panel.position.x + panel.size.x + point_size.x / 2.0,
-		panel.position.y + panel.size.y / 2.0 - point_size.y / 2.0
+		foldable_container.position.x + foldable_container.size.x + point_size.x,
+		foldable_container.position.y + foldable_container.size.y / 2.0 - point_size.y / 2.0
 	)

@@ -4,48 +4,25 @@
 [ext_resource type="Script" uid="uid://dnlql5cmof07w" path="res://scripts/connection_point.gd" id="2_0561r"]
 [ext_resource type="Script" uid="uid://ck3orbbrba44b" path="res://addons/eranot.resizable/resizable.gd" id="3_vle8t"]
 
-[node name="Property" type="Control" unique_id=1072672420]
-custom_minimum_size = Vector2(75, 130)
+[node name="Property" type="Control" unique_id=1928449721]
+custom_minimum_size = Vector2(125, 125)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 75.0
-offset_bottom = 130.0
+offset_right = 125.0
+offset_bottom = 125.0
 script = ExtResource("1_8tfsl")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1126164899]
+[node name="FoldableContainer" type="FoldableContainer" parent="." unique_id=1767190924]
+custom_minimum_size = Vector2(125, 125)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
-[node name="Resizeable" type="Control" parent="PanelContainer" unique_id=507849916]
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("3_vle8t")
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1916246349]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=461259270]
-layout_mode = 2
-
-[node name="TitleBar" type="PanelContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=611855471]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/TitleBar" unique_id=1671118891]
-layout_mode = 2
-text = "Property"
-horizontal_alignment = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=710491760]
+[node name="ScrollContainer" type="ScrollContainer" parent="FoldableContainer" unique_id=710491760]
 custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
 size_flags_vertical = 3
@@ -53,27 +30,29 @@ size_flags_stretch_ratio = 1.5
 theme_override_constants/scrollbar_h_separation = 3
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1081650947]
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer" unique_id=1081650947]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Resizeable" type="Control" parent="FoldableContainer" unique_id=507849916]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_vle8t")
+
 [node name="ConnectionPoint" type="Control" parent="." unique_id=2041320307]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 6
+anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -10.0
+offset_left = -20.0
 offset_top = -10.0
-offset_right = 10.0
 offset_bottom = 10.0
-grow_horizontal = 2
+grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("2_0561r")
 
-[connection signal="item_rect_changed" from="PanelContainer" to="ConnectionPoint" method="_on_property_item_rect_changed"]
-[connection signal="gui_input" from="PanelContainer/MarginContainer/VBoxContainer/TitleBar" to="." method="_gui_input"]
-[connection signal="gui_input" from="PanelContainer/MarginContainer/VBoxContainer/TitleBar/Label" to="." method="_gui_input"]
-[connection signal="drag_line_started" from="ConnectionPoint" to="." method="_on_connection_point_drag_line_started"]
+[connection signal="item_rect_changed" from="." to="ConnectionPoint" method="update_point_pos"]
+[connection signal="item_rect_changed" from="FoldableContainer" to="ConnectionPoint" method="update_point_pos"]

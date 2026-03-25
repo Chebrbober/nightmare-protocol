@@ -179,8 +179,10 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			property_instance.position = event.position
 			properties_container.add_child(property_instance)
 			property_instance.setup(property_data)
-			property_instance.panel.item_rect_changed.connect(connection_manager.update_lines)
 			property_instance.item_rect_changed.connect(connection_manager.update_lines)
+			property_instance.foldable_container.item_rect_changed.connect(
+				connection_manager.update_lines
+			)
 			property_instance.connection_point.drag_line_started.connect(
 				_on_property_drag_line_started
 			)
@@ -209,6 +211,7 @@ func _try_connect(mouse_pos: Vector2) -> bool:
 			_make_connection(dragging_from.owner_node, obj)
 			return true
 	return false
+
 
 func _make_connection(property: Node, obj: RigidBody2D) -> void:
 	var prop_data = property.current_data as PropertyData

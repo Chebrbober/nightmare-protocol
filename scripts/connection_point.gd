@@ -27,7 +27,13 @@ func _draw() -> void:
 
 func update_point_pos() -> void:
 	var foldable_container = get_parent().get_node("FoldableContainer")
-	position = Vector2(
-		foldable_container.position.x + foldable_container.size.x + point_size.x,
-		foldable_container.position.y + foldable_container.size.y / 2.0 - point_size.y / 2.0
-	)
+	if foldable_container.folded:
+		position = Vector2(
+			foldable_container.position.x + foldable_container.size.x + point_size.x,
+			foldable_container.position.y + point_size.y * 2.0
+		)
+	else:
+		position = Vector2(
+			foldable_container.position.x + foldable_container.size.x + point_size.x,
+			foldable_container.position.y + foldable_container.size.y / 2.0 - point_size.y / 2.0
+		)

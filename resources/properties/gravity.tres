@@ -7,5 +7,6 @@
 script = ExtResource("1_36ium")
 logic = ExtResource("1_pt53c")
 compatible_tags = Array[String](["heavy", "food", "metal"])
+incompatible_tags = Array[String](["gravity"])
 name = "Gravity"
 description = "Appends gravity physics to an object"

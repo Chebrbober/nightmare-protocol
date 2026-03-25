@@ -195,28 +195,26 @@ func format_prop_name(prop_name: String) -> String:
 
 
 func get_min_value(prop_name: String, prop_type: int) -> float:
-	var min_key = "min_" + prop_name + "_value"
-	var temp_node = Node.new()
-	temp_node.set_script(current_data.logic)
-	if temp_node.get(min_key) != null:
-		print("found min value")
-		var result = temp_node.get(min_key)
-		temp_node.free()
-		return result
-	temp_node.free()
+	var temp = Node.new()
+	temp.set_script(current_data.logic)
+	for prop in temp.get_property_list():
+		if prop.name == prop_name and prop.hint == PROPERTY_HINT_RANGE:
+			var parts = prop.hint_string.split(",")
+			temp.free()
+			return float(parts[0])
+	temp.free()
 	return 0.0
 
 
 func get_max_value(prop_name: String, prop_type: int) -> float:
-	var max_key = "max_" + prop_name + "_value"
-	var temp_node = Node.new()
-	temp_node.set_script(current_data.logic)
-	if temp_node.get(max_key) != null:
-		print("found max value")
-		var result = temp_node.get(max_key)
-		temp_node.free()
-		return result
-	temp_node.free()
+	var temp = Node.new()
+	temp.set_script(current_data.logic)
+	for prop in temp.get_property_list():
+		if prop.name == prop_name and prop.hint == PROPERTY_HINT_RANGE:
+			var parts = prop.hint_string.split(",")
+			temp.free()
+			return float(parts[1])
+	temp.free()
 	return 100.0
 
 

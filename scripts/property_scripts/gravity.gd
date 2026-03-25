@@ -1,12 +1,7 @@
 class_name GravityProperty
 extends Node
 
-@export var gravity: float = 1.0
-@export var mass: float = 1.0
-@export var max_gravity_value: float = 8.0
-@export var min_gravity_value: float = -(max_gravity_value)
-@export var max_mass_value: float = 1000.0
-@export var min_mass_value: float = 0.01
+@export_range(-8.0, 8.0, 0.01) var gravity: float = 1.0
 
 
 func _ready() -> void:
@@ -16,7 +11,6 @@ func _ready() -> void:
 
 	if body and body is RigidBody2D:
 		body.gravity_scale = gravity
-		body.mass = mass
 	else:
 		push_error("Gravity property requires RigidBody2D in hierarchy")
 
@@ -28,4 +22,3 @@ func _physics_process(_delta: float) -> void:
 
 	if body is RigidBody2D:
 		body.gravity_scale = gravity
-		body.mass = mass

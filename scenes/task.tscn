@@ -4,12 +4,9 @@
 
 [node name="Task" type="Control" unique_id=554647325]
 layout_mode = 3
-anchor_left = 0.5
-anchor_top = 0.03
-anchor_right = 0.5
-anchor_bottom = 0.05
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 0
+size_flags_horizontal = 4
+mouse_filter = 1
 script = ExtResource("1_kolu2")
 
 [node name="FoldableContainer" type="FoldableContainer" parent="." unique_id=845842208]

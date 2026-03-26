@@ -9,6 +9,8 @@ func _ready() -> void:
 	while body and not body is RigidBody2D:
 		body = body.get_parent()
 
+	name = "GravityProperty"
+
 	if body and body is RigidBody2D:
 		body.gravity_scale = gravity
 	else:

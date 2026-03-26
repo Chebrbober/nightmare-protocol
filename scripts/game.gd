@@ -5,7 +5,7 @@ extends Control
 @onready var attribute_button: AttributeButton = %AttributeButton
 @onready var spawn_area: Area2D = $SpawnArea
 @onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
-@onready var task_node: Control = $Task
+@onready var task_node: Control = $MarginContainer/Task
 @onready var objects_container: Node2D = $ObjectsContainer
 @onready var properties_container: Node2D = $PropertiesContainer
 
@@ -134,7 +134,7 @@ func _apply_property_to_object(property: Node, obj: RigidBody2D) -> void:
 	for key in property.values.keys():
 		logic_node.set(key, property.values[key])
 
-	obj.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
+	obj.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
 	obj.freeze = false
 
 	obj.add_child(logic_node)

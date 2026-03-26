@@ -5,8 +5,12 @@
 [node name="Object" type="RigidBody2D" unique_id=1419311971]
 physics_interpolation_mode = 2
 collision_layer = 2
+collision_mask = 255
 input_pickable = true
 gravity_scale = 0.0
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_pkda2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1391266453]

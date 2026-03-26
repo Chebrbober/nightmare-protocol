@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PropertyData" format=3 uid="uid://gh6qdwma2jvs"]
+
+[ext_resource type="Script" uid="uid://dqldvpe2vrfn1" path="res://scripts/property_scripts/conductivity.gd" id="1_5iapq"]
+[ext_resource type="Script" uid="uid://bs6rks3lfl0jy" path="res://scripts/property_data.gd" id="1_bh2v6"]
+
+[resource]
+script = ExtResource("1_bh2v6")
+logic = ExtResource("1_5iapq")
+compatible_tags = Array[String](["metal", "liquid"])
+incompatible_tags = Array[String](["conductivity", "organic", "gas", "dry"])
+action_tags = Array[String](["electric", "utility"])
+name = "Conductivity"
+description = "Make the body conduct electricity it collided with"
+metadata/_custom_type_script = "uid://bs6rks3lfl0jy"

@@ -4,13 +4,14 @@
 [ext_resource type="Script" uid="uid://dmwuurve8dpma" path="res://scripts/attribute_button.gd" id="2_uljnt"]
 
 [node name="AttributeButton" type="Button" unique_id=947812912]
-custom_minimum_size = Vector2(30, 30)
-offset_right = 30.0
-offset_bottom = 31.0
+custom_minimum_size = Vector2(50, 50)
+offset_right = 32.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 12
 toggle_mode = true
 button_group = ExtResource("1_gqp6v")
-text = "
-"
+text_overrun_behavior = 2
+autowrap_mode = 3
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true

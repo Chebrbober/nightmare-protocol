@@ -13,7 +13,6 @@ var sprite_size: Vector2
 func _ready() -> void:
 	add_to_group("objects")
 	input_pickable = true
-	freeze = true
 
 
 func setup(data: ObjectData) -> void:

@@ -45,8 +45,9 @@ func _ready() -> void:
 					attribute_button_instance.tooltip_text = object_data.description
 					attribute_button_instance.icon = object_data.texture
 					attribute_button_instance.visible = true
-					$MarginContainer/PanelContainer/MarginContainer/VBoxContainer.add_child(
-						attribute_button_instance
+					(
+						$MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer
+						. add_child(attribute_button_instance)
 					)
 					attribute_button_instance.connect(
 						"attribute_toggled", Callable(self, "_on_attribute_button_toggled")
@@ -73,8 +74,9 @@ func _ready() -> void:
 					attribute_button_instance.attribute_data = property_data
 					attribute_button_instance.text = property_data.name
 					attribute_button_instance.visible = true
-					$MarginContainer/PanelContainer/MarginContainer/VBoxContainer.add_child(
-						attribute_button_instance
+					(
+						$MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer
+						. add_child(attribute_button_instance)
 					)
 					attribute_button_instance.connect(
 						"attribute_toggled", Callable(self, "_on_attribute_button_toggled")
@@ -83,7 +85,7 @@ func _ready() -> void:
 
 			file_name = property_res_dir.get_next()
 
-	$MarginContainer/PanelContainer/MarginContainer/VBoxContainer/AttributeButton.visible = false
+	$MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/AttributeButton.visible = false
 
 	task_generator = TaskGenerator.new()
 	add_child(task_generator)
@@ -135,7 +137,6 @@ func _apply_property_to_object(property: Node, obj: RigidBody2D) -> void:
 		logic_node.set(key, property.values[key])
 
 	obj.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
-	obj.freeze = false
 
 	obj.add_child(logic_node)
 	print("Applied: ", prop_data.name, " -> ", obj.current_data.name)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PropertyData" format=3 uid="uid://u0dnywnahjv4"]
+
+[ext_resource type="Script" uid="uid://bcv5vrxbk2hst" path="res://scripts/property_scripts/electrical_velocity.gd" id="1_fskk6"]
+[ext_resource type="Script" uid="uid://bs6rks3lfl0jy" path="res://scripts/property_data.gd" id="1_jqqpt"]
+
+[resource]
+script = ExtResource("1_jqqpt")
+logic = ExtResource("1_fskk6")
+compatible_tags = Array[String]([""])
+action_tags = Array[String](["velocity"])
+name = "Electrical velocity"
+description = "Apply some velocity to object to make him move into any direction you want (needs power)"
+metadata/_custom_type_script = "uid://bs6rks3lfl0jy"

@@ -6,15 +6,10 @@ extends Node
 
 func _ready() -> void:
 	var body = get_parent()
-	while body and not body is RigidBody2D:
-		body = body.get_parent()
-
 	name = "GravityProperty"
 
-	if body and body is RigidBody2D:
-		body.gravity_scale = gravity
-	else:
-		push_error("Gravity property requires RigidBody2D in hierarchy")
+	body.freeze = false
+	body.gravity_scale = gravity
 
 
 func _physics_process(_delta: float) -> void:

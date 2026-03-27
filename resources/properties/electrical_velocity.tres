@@ -7,7 +7,7 @@
 script = ExtResource("1_jqqpt")
 logic = ExtResource("1_fskk6")
 compatible_tags = Array[String]([""])
-action_tags = Array[String](["velocity"])
+property_tags = Array[String](["speed"])
 name = "Electrical velocity"
 description = "Apply some velocity to object to make him move into any direction you want (needs power)"
 metadata/_custom_type_script = "uid://bs6rks3lfl0jy"

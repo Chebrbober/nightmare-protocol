@@ -19,18 +19,26 @@ const HARD_TEMPLATES = [
 	"{greetings}\nLet {object_a} {action} but stop {restriction}. Also — {object_b} must {side_effect}",
 ]
 
-const TAG_ACTIONS = {
-	"gravity": ["fall slowly", "fly upwards", "hover in place", "maintain zero gravity"],
-	"speed": ["move fast", "crawl slowly", "dash", "stand still"],
-	"temperature": ["stay cold", "refuse to melt", "heat up", "freeze everything around"],
-	"electric": ["glow", "spark", "stop conducting electricity", "charge up"],
+const INTENSITY_ADJECTIVES = {
+	"below": ["inverted", "unnaturally", "reversely", "backwards"],
+	"zero": ["perfectly still", "weightless", "neutral", "completely balanced"],
+	"low": ["gently", "hesitantly", "barely"],
+	"mid": ["steadily", "normally", "moderately"],
+	"high": ["violently", "uncontrollably", "to the extreme"]
+}
+
+const PROPERTY_TAGS = {
+	"gravity": {"label": "{direction} {intensity}", "var_name": "gravity"},
+	"speed": {"label": "{direction} {intensity}", "var_name": "power"},
+	"temperature": {"label": "{intensity}", "var_name": "temperature"},
+	"electric": {"label": "{intensity} energized", "var_name": "voltage"},
+	"phantomness": {"label": "being unable to collide"},
 }
 
 const RESTRICTIONS = [
 	"touching the surface",
 	"going out of bounds",
 	"touching other objects",
-	"emitting heat",
 ]
 
 const SIDE_EFFECTS = [
@@ -88,9 +96,64 @@ func generate(objects: Array, properties: Array) -> String:
 
 func _get_actions_for_property(prop: PropertyData) -> Array:
 	var result = []
-	for tag in prop.action_tags:
-		if tag in TAG_ACTIONS:
-			result.append_array(TAG_ACTIONS[tag])
+
+	var temp_node = Node.new()
+	temp_node.set_script(prop.logic)
+	var prop_list = temp_node.get_property_list()
+
+	for tag in prop.property_tags:
+		var config = PROPERTY_TAGS[tag]
+		var var_name = config["var_name"]
+
+		for p in prop_list:
+			if p.name == var_name and p.hint == PROPERTY_HINT_RANGE:
+				var parts = p.hint_string.split(",")
+				var p_min = float(parts[0])
+				var p_max = float(parts[1])
+
+				var available_keys = ["low", "mid", "high"]
+				if p_min < 0:
+					available_keys.append("below")
+				if p_min <= 0 and p_max >= 0:
+					available_keys.append("zero")
+
+				var intensity_key = available_keys.pick_random()
+				var adj = INTENSITY_ADJECTIVES[intensity_key].pick_random()
+
+				var direction_text = ""
+
+				if tag == "gravity":
+					if intensity_key == "zero":
+						direction_text = "hover"
+					elif intensity_key == "below":
+						direction_text = "float upwards"
+					else:
+						direction_text = "fall downwards"
+
+				elif tag == "speed":
+					var dirs = ["to the right", "to the left", "upwards", "downwards"]
+					direction_text = (
+						"move " + dirs.pick_random() if intensity_key != "zero" else "stay still"
+					)
+
+				elif tag == "temperature":
+					direction_text = (
+						"radiate heat" if intensity_key != "below" else "chill everything"
+					)
+					if intensity_key == "zero":
+						direction_text = "stay at room temperature"
+
+				var final_label = (
+					config["label"]
+					. format({"intensity": adj, "direction": direction_text})
+					. strip_edges()
+				)
+
+				result.append(final_label)
+				break
+
+	temp_node.free()
+
 	if result.is_empty():
-		result = ["do something unusual", "behave strangely"]
+		result = ["behave strangely", "distort reality"]
 	return result

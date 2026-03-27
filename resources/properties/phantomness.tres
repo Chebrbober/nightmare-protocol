@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_e7t0u")
 logic = ExtResource("1_8p8sl")
-action_tags = Array[String](["phantomness"])
+property_tags = Array[String](["phantomness"])
 name = "Phantomness"
 description = "Make something unable to collide and a bit hard to see."
 metadata/_custom_type_script = "uid://bs6rks3lfl0jy"

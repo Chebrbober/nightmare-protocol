@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bkjaowtp8h2y8"]
+
+[ext_resource type="Script" uid="uid://bd4v77t4pekfn" path="res://scripts/property.gd" id="1_8tfsl"]
+[ext_resource type="Script" uid="uid://dnlql5cmof07w" path="res://scripts/connection_point.gd" id="2_0561r"]
+[ext_resource type="Script" uid="uid://ck3orbbrba44b" path="res://addons/eranot.resizable/resizable.gd" id="3_vle8t"]
+
+[node name="Property" type="Control" unique_id=1928449721]
+custom_minimum_size = Vector2(125, 100)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 125.0
+offset_bottom = 100.0
+script = ExtResource("1_8tfsl")
+
+[node name="FoldableContainer" type="FoldableContainer" parent="." unique_id=1767190924]
+custom_minimum_size = Vector2(125, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="FoldableContainer" unique_id=710491760]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+theme_override_constants/scrollbar_h_separation = 3
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer" unique_id=1081650947]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Resizeable" type="Control" parent="FoldableContainer" unique_id=507849916]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_vle8t")
+
+[node name="ConnectionPoint" type="Control" parent="." unique_id=2041320307]
+anchors_preset = 0
+offset_right = 10.0
+offset_bottom = 10.0
+script = ExtResource("2_0561r")
+
+[connection signal="item_rect_changed" from="." to="ConnectionPoint" method="update_point_pos"]
+[connection signal="item_rect_changed" from="FoldableContainer" to="ConnectionPoint" method="update_point_pos"]
+[connection signal="visibility_changed" from="FoldableContainer/ScrollContainer" to="ConnectionPoint" method="update_point_pos"]

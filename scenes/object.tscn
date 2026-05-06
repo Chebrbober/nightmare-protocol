@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bvgnl45trqfhh"]
+
+[ext_resource type="Script" uid="uid://btpqiewnjm0qk" path="res://scripts/object.gd" id="1_pkda2"]
+
+[node name="Object" type="RigidBody2D" unique_id=1419311971]
+physics_interpolation_mode = 2
+collision_layer = 2
+collision_mask = 255
+input_pickable = true
+mass = 0.001
+gravity_scale = 0.0
+freeze_mode = 1
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 3
+script = ExtResource("1_pkda2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1391266453]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2090057023]
+
+[connection signal="input_event" from="." to="." method="_input_event"]

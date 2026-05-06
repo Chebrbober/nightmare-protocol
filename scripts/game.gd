@@ -4,9 +4,9 @@ extends Control
 @export_dir var path_to_property_resources = "res://resources/properties/"
 @onready var attribute_button: AttributeButton = %AttributeButton
 @onready var hide_button: Button = %Hide
-@onready var spawn_area: Area2D = $SpawnArea
-@onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
-@onready var task_node: Control = $MarginContainer/Task
+@onready var spawn_area: Area2D = $UILayer/SpawnArea
+@onready var collision_shape: CollisionShape2D = $UILayer/SpawnArea/CollisionShape2D
+@onready var task_node: Control = $UILayer/MarginContainer/Task
 @onready var objects_container: Node2D = $ObjectsContainer
 @onready var properties_container: Node2D = $PropertiesContainer
 
@@ -50,7 +50,7 @@ func _ready() -> void:
 					attribute_button_instance.button_group = attribute_button.button_group
 					attribute_button_instance.visible = true
 					(
-						$MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer
+						$UILayer/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer
 						. add_child(attribute_button_instance)
 					)
 					attribute_button_instance.connect(
@@ -79,7 +79,7 @@ func _ready() -> void:
 					attribute_button_instance.text = property_data.name
 					attribute_button_instance.visible = true
 					(
-						$MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer
+						$UILayer/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer
 						. add_child(attribute_button_instance)
 					)
 					attribute_button_instance.connect(
@@ -89,7 +89,7 @@ func _ready() -> void:
 
 			file_name = property_res_dir.get_next()
 
-	$MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/AttributeButton.visible = false
+	$UILayer/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/AttributeButton.visible = false
 
 	task_generator = TaskGenerator.new()
 	add_child(task_generator)
@@ -111,7 +111,7 @@ func _on_exit_pressed() -> void:
 
 func _on_compile_pressed() -> void:
 	print("Compile button pressed")
-	get_node("PropertiesContainer").hide()
+	get_node("UILayer/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/PropertiesContainer").hide()
 
 	for obj in connection_manager.connections.keys():
 		if not is_instance_valid(obj):

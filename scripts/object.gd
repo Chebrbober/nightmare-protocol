@@ -8,6 +8,7 @@ var values: Dictionary = {}
 var current_data: ObjectData
 var dragging: bool = false
 var sprite_size: Vector2
+var of = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -27,16 +28,13 @@ func setup(data: ObjectData) -> void:
 		collision_shape.shape = data.shape
 		collision_shape.shape.set_size(sprite_size)
 
+func _process(delta: float) -> void:
+	if dragging:
+		position = get_global_mouse_position() - of
 
-func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				dragging = true
-			else:
-				dragging = false
+func _on_drag_button_up() -> void:
+	dragging = false
 
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and dragging:
-		position += event.relative
+func _on_drag_button_down() -> void:
+	dragging = true
+	of = get_global_mouse_position() - position

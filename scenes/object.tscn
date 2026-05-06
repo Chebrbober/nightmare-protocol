@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bvgnl45trqfhh"]
 
 [ext_resource type="Script" uid="uid://btpqiewnjm0qk" path="res://scripts/object.gd" id="1_pkda2"]
+[ext_resource type="Script" uid="uid://bvxde07tqjetw" path="res://scripts/drag.gd" id="2_cbfvs"]
 
 [node name="Object" type="RigidBody2D" unique_id=1419311971]
 physics_interpolation_mode = 2
@@ -18,5 +19,17 @@ script = ExtResource("1_pkda2")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1391266453]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2090057023]
+unique_name_in_owner = true
+
+[node name="Drag" type="Button" parent="." unique_id=1115677612]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_cbfvs")
 
 [connection signal="input_event" from="." to="." method="_input_event"]
+[connection signal="button_down" from="Drag" to="." method="_on_drag_button_down"]
+[connection signal="button_up" from="Drag" to="." method="_on_drag_button_up"]

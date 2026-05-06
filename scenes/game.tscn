@@ -85,7 +85,18 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Exit"
 
-[node name="Compile" type="Button" parent="MarginContainer" unique_id=933902950]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer" unique_id=449917444]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Hide" type="Button" parent="MarginContainer/HBoxContainer2" unique_id=412296332]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Hide"
+
+[node name="Compile" type="Button" parent="MarginContainer/HBoxContainer2" unique_id=933902950]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
@@ -139,4 +150,5 @@ shape = SubResource("WorldBoundaryShape2D_lbhrr")
 
 [connection signal="input_event" from="SpawnArea" to="." method="_on_spawn_area_input_event"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="MarginContainer/Compile" to="." method="_on_compile_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer2/Hide" to="." method="_on_hide_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer2/Compile" to="." method="_on_compile_pressed"]

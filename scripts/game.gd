@@ -3,6 +3,7 @@ extends Control
 @export_dir var path_to_object_resources = "res://resources/objects/"
 @export_dir var path_to_property_resources = "res://resources/properties/"
 @onready var attribute_button: AttributeButton = %AttributeButton
+@onready var hide_button: Button = %Hide
 @onready var spawn_area: Area2D = $SpawnArea
 @onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
 @onready var task_node: Control = $MarginContainer/Task
@@ -236,3 +237,20 @@ func generate_task() -> void:
 	var text = task_generator.generate(object_list, property_list)
 	task_node.set_task(text["text"])
 	pure_tags = text["tags"]
+
+
+func _on_hide_pressed() -> void:
+	if properties_container.visible:
+		properties_container.hide()
+		for property in properties_container.get_children():
+			if property in spawned_properties:
+				property.hide()
+				property.process_mode = Node.PROCESS_MODE_DISABLED
+		hide_button.text = "Show"
+	else:
+		properties_container.show()
+		for property in properties_container.get_children():
+			if property in spawned_properties:
+				property.show()
+				property.process_mode = Node.PROCESS_MODE_INHERIT
+		hide_button.text = "Hide"

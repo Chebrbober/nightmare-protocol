@@ -1,7 +1,7 @@
 class_name ElectricalVelocityProperty
 extends Node
 
-@export_range(0, 1000000) var power: float = 1000.0
+@export_range(0, 100) var power: float = 50.0
 @export_range(0, 360) var angle: float = 0.0
 
 
@@ -19,3 +19,7 @@ func _physics_process(delta: float) -> void:
 
 	var dir_vector = Vector2.RIGHT.rotated(deg_to_rad(angle))
 	body.apply_central_force(dir_vector * power)
+
+	var max_speed = power
+	if body.linear_velocity.length() > max_speed:
+		body.linear_velocity = body.linear_velocity.normalized() * max_speed

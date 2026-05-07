@@ -4,8 +4,8 @@ extends Control
 @export_dir var path_to_property_resources = "res://resources/properties/"
 @onready var attribute_button: AttributeButton = %AttributeButton
 @onready var hide_button: Button = %Hide
-@onready var spawn_area: Area2D = $UILayer/SpawnArea
-@onready var collision_shape: CollisionShape2D = $UILayer/SpawnArea/CollisionShape2D
+@onready var spawn_area: Area2D = $SpawnArea
+@onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
 @onready var task_node: Control = $UILayer/MarginContainer/Task
 @onready var objects_container: Node2D = $ObjectsContainer
 @onready var properties_container: Node2D = $PropertiesContainer
@@ -111,7 +111,7 @@ func _on_exit_pressed() -> void:
 
 func _on_compile_pressed() -> void:
 	print("Compile button pressed")
-	get_node("UILayer/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/PropertiesContainer").hide()
+	properties_container.hide()
 
 	for obj in connection_manager.connections.keys():
 		if not is_instance_valid(obj):
@@ -122,6 +122,13 @@ func _on_compile_pressed() -> void:
 				continue
 
 			_apply_property_to_object(property, obj)
+	await get_tree().create_timer(randi_range(1, 7)).timeout
+	task_checker = TaskChecker.new()
+	add_child(task_checker)
+	if task_checker.check_task(pure_tags, connection_manager.connections):
+		print("Task completed!")
+	else:
+		print("Task failed. Try again.")
 
 
 func _apply_property_to_object(property: Node, obj: RigidBody2D) -> void:

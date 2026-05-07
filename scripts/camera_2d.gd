@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 		position.y += move_speed
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
 		if event.pressed:
 			if Input.is_action_just_pressed("zoom_in"):
 				zoom_camera(zoom_speed)

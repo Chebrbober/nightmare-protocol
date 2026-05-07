@@ -1,7 +1,7 @@
 class_name ElectricalVelocityProperty
 extends Node
 
-@export_range(0, 100) var power: float = 50.0
+@export_range(1, 100) var power: float = 50.0
 @export_range(0, 360) var angle: float = 0.0
 
 

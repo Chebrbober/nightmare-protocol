@@ -1,6 +1,6 @@
 extends Control
 
-@onready var text_label = $FoldableContainer/Text
+@onready var text_label = $FoldableContainer/ScrollContainer/VBoxContainer/Text
 
 
 func set_task(text: String) -> void:

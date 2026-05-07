@@ -14,7 +14,7 @@ func check_task(task_tags: Array[String], connections: Dictionary) -> bool:
 	return false
 
 
-func _is_condition_met(obj: RigidBody2D, prop_data: PropertyData, task_tags: Array[String]) -> bool:
+func _is_condition_met(_obj: RigidBody2D, prop_data: PropertyData, task_tags: Array[String]) -> bool:
 	for tag in prop_data.property_tags:
 		if tag in task_tags:
 			return true

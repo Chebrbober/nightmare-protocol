@@ -4,6 +4,8 @@ extends RigidBody2D
 @onready var sprite: Sprite2D = $Sprite2D
 @export var logic: Script
 
+signal position_changed
+
 var values: Dictionary = {}
 var current_data: ObjectData
 var dragging: bool = false
@@ -31,6 +33,7 @@ func setup(data: ObjectData) -> void:
 func _process(delta: float) -> void:
 	if dragging:
 		position = get_global_mouse_position() - of
+		position_changed.emit()
 
 func _on_drag_button_up() -> void:
 	dragging = false

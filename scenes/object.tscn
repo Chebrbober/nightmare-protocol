@@ -8,7 +8,6 @@ physics_interpolation_mode = 2
 collision_layer = 2
 collision_mask = 255
 input_pickable = true
-mass = 0.001
 gravity_scale = 0.0
 freeze_mode = 1
 continuous_cd = 1
@@ -28,7 +27,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 script = ExtResource("2_cbfvs")
 
 [connection signal="button_down" from="Drag" to="." method="_on_drag_button_down"]

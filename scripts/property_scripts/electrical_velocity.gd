@@ -9,7 +9,7 @@ func _ready() -> void:
 	name = "ElectricalVelocity"
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var body = get_parent() as RigidBody2D
 	if not body.is_in_group("powered"):
 		return

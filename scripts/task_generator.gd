@@ -4,8 +4,12 @@ extends Node
 var pure_tags: Array = []
 
 const GREETINGS = [
-    "Alright, we finally fell asleep. Here are the instructions we must follow...",
-    "Oh! Finally! This one started dozing off. What is it asking for?",
+    "Alright, we finally fell asleep. He seems to be very tired of work and wants to rest a bit. Here are the wishes we must fulfill...",
+    "Oh! Finally! This one started dozing off. Maybe we can make it happy and get some rest ourselves? What is it asking for?",
+    "I'm so tired... Can we just rest for a bit? Sure, but it seems like we have to do some work first. What does it want?",
+    "I'm so bored... Can we do something fun? Sure, but it seems like we have to do some work first. What does she or he want?",
+    "We should eat to live, but this guy lives to eat... He lost the sense of life... But maybe we can make him happy with some food? What does he want?",
+    "Maybe if we fulfill this wish, we can escape this loop? What does it want?",
     "Let's get straight to the point, I'm too lazy to wait >:D"
 ]
 

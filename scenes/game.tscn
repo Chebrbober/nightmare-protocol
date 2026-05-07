@@ -9,9 +9,6 @@
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8cj0n"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
-size = Vector2(640, 360)
-
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lbhrr"]
 
 [node name="Game" type="Control" unique_id=1964283767]
@@ -27,18 +24,17 @@ mouse_filter = 2
 script = ExtResource("1_uwrxv")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1469479735]
-modulate = Color(0.09415329, 0.20891497, 0.2986514, 1)
+modulate = Color(0.016074587, 0.060152993, 0.09989106, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -444.0
-offset_top = -333.0
-offset_right = 457.0
-offset_bottom = 361.0
+offset_left = -157.0
+offset_top = -937.0
+offset_right = 2495.0
+offset_bottom = 157.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = SubResource("CanvasTexture_8cj0n")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=116150312]
@@ -123,11 +119,13 @@ theme_override_constants/margin_bottom = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UILayer/MarginContainer/PanelContainer/MarginContainer" unique_id=1772081889]
 layout_mode = 2
+mouse_filter = 0
 theme_override_constants/scrollbar_h_separation = 3
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MarginContainer/PanelContainer/MarginContainer/ScrollContainer" unique_id=589038486]
 layout_mode = 2
+mouse_filter = 0
 theme_override_constants/separation = 5
 
 [node name="AttributeButton" type="Button" parent="UILayer/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=61823767]
@@ -141,15 +139,6 @@ vertical_icon_alignment = 0
 expand_icon = true
 script = ExtResource("2_yqjtg")
 metadata/_custom_type_script = "uid://dmwuurve8dpma"
-
-[node name="SpawnArea" type="Area2D" parent="." unique_id=1208177727]
-disable_mode = 1
-collision_layer = 2
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnArea" unique_id=865046939]
-position = Vector2(321, 180)
-shape = SubResource("RectangleShape2D_lnu2h")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1657395331]
 position = Vector2(330, 290)
@@ -166,7 +155,7 @@ z_index = 2
 top_level = true
 z_index = 2
 
+[connection signal="gui_input" from="TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="pressed" from="UILayer/MarginContainer/HBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="UILayer/MarginContainer/HBoxContainer2/Hide" to="." method="_on_hide_pressed"]
 [connection signal="pressed" from="UILayer/MarginContainer/HBoxContainer2/Compile" to="." method="_on_compile_pressed"]
-[connection signal="input_event" from="SpawnArea" to="." method="_on_spawn_area_input_event"]

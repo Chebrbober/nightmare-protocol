@@ -1,11 +1,11 @@
 extends Camera2D
 
-@export var zoom_speed: float = 0.01
+@export var zoom_speed: float = 0.03
 @export var move_speed: float = 5
 @export var min_zoom: float = 0.5
 @export var max_zoom: float = 3.0
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_pressed("move_left"):
 		position.x -= move_speed
 	if Input.is_action_pressed("move_right"):

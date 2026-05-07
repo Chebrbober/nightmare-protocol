@@ -4,8 +4,6 @@ extends Control
 @export_dir var path_to_property_resources = "res://resources/properties/"
 @onready var attribute_button: AttributeButton = %AttributeButton
 @onready var hide_button: Button = %Hide
-@onready var spawn_area: Area2D = $SpawnArea
-@onready var collision_shape: CollisionShape2D = $SpawnArea/CollisionShape2D
 @onready var task_node: Control = $UILayer/MarginContainer/Task
 @onready var objects_container: Node2D = $ObjectsContainer
 @onready var properties_container: Node2D = $PropertiesContainer
@@ -24,8 +22,6 @@ var current_drag_line: Line2D = null
 
 func _ready() -> void:
 	connection_manager = load("res://scripts/connection_manager.gd").new()
-	collision_shape.shape.size = self.size
-	collision_shape.position = self.size / 2
 	var object_res_dir = DirAccess.open(path_to_object_resources)
 	var property_res_dir = DirAccess.open(path_to_property_resources)
 	if object_res_dir:
@@ -122,7 +118,7 @@ func _on_compile_pressed() -> void:
 				continue
 
 			_apply_property_to_object(property, obj)
-	await get_tree().create_timer(randi_range(1, 7)).timeout
+	await get_tree().create_timer(randi_range(2, 7)).timeout
 	task_checker = TaskChecker.new()
 	add_child(task_checker)
 	if task_checker.check_task(pure_tags, connection_manager.connections):
@@ -171,24 +167,24 @@ func _on_property_drag_line_started(from_point: Control) -> void:
 		current_drag_line.queue_free()
 		current_drag_line = null
 
-
-func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+func _on_texture_rect_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if current_attribute_data is ObjectData:
 			print("Spawning object: ", current_attribute_data.name)
 			var object_data = current_attribute_data as ObjectData
 			var object_scene = load("res://scenes/object.tscn") as PackedScene
 			var object_instance = object_scene.instantiate()
-			object_instance.position = event.position
+			object_instance.position = get_global_mouse_position()
 			objects_container.add_child(object_instance)
 			object_instance.setup(object_data)
+			object_instance.position_changed.connect(connection_manager.update_lines)
 
 		elif current_attribute_data is PropertyData:
 			print("Spawning property: ", current_attribute_data.name)
 			var property_data = current_attribute_data as PropertyData
 			var property_scene = load("res://scenes/property.tscn") as PackedScene
 			var property_instance = property_scene.instantiate()
-			property_instance.position = event.position
+			property_instance.position = get_global_mouse_position()
 			properties_container.add_child(property_instance)
 			property_instance.setup(property_data)
 			property_instance.item_rect_changed.connect(connection_manager.update_lines)
@@ -207,7 +203,6 @@ func _on_spawn_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 	):
 		if connection_manager.try_disconnect_at_point(event.position):
 			return
-
 
 func _try_connect(mouse_pos: Vector2) -> bool:
 	var all_objects = get_tree().get_nodes_in_group("objects")

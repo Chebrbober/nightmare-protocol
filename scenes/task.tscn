@@ -10,6 +10,7 @@ mouse_filter = 1
 script = ExtResource("1_kolu2")
 
 [node name="FoldableContainer" type="FoldableContainer" parent="." unique_id=845842208]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -23,9 +24,18 @@ folded = true
 title = "Task"
 title_alignment = 1
 
-[node name="Text" type="Label" parent="FoldableContainer" unique_id=795898085]
+[node name="ScrollContainer" type="ScrollContainer" parent="FoldableContainer" unique_id=1770371799]
 visible = false
+layout_mode = 2
+horizontal_scroll_mode = 0
+scroll_hint_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer/ScrollContainer" unique_id=1652622138]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="FoldableContainer/ScrollContainer/VBoxContainer" unique_id=795898085]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "Task text"
+horizontal_alignment = 1
 vertical_alignment = 1
